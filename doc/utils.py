@@ -398,7 +398,7 @@ def plot_graph(graph, fixed=None, positions=None, show_plot=True, fpath=None):
     graph : networkx.MultiDiGraph
         Output from `make_graph`
     fixed : {None}, list, optional
-        Node around which to fix graph. Overrides `pos`.
+        Node around which to fix graph. Overrides `positions`.
         Example: fixed=['mod1']
     positions : {None}, dict, optional
         ``dict`` of ``list`` output from `make_positions_dict`.
@@ -437,6 +437,7 @@ def plot_graph(graph, fixed=None, positions=None, show_plot=True, fpath=None):
         pos = nx.spring_layout(graph, fixed=fixed)
     # Draw graph and save.
     nx.draw(graph, pos=pos)
+    nx.draw_networkx_labels(graph, pos=pos)
     if fpath is not None:
         plt.savefig(fpath, bbox_inches='tight')
     plt.show()
