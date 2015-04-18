@@ -19,16 +19,14 @@ References
 # TODO: use http://sphinx-doc.org/
 
 
-# Import standard libraries.
+# Import standard packages.
 from __future__ import absolute_import, division, print_function
 import ast
-import sys
-import pdb
-# Import external packages.
+import warnings
+# Import installed packages.
 import pandas as pd
 import networkx as nx
 import matplotlib.pyplot as plt
-# Import internal modules.
 
 
 def parse_see_also(line):
@@ -431,13 +429,15 @@ def plot_graph(graph, fixed=None, positions=None, show_plot=True, fpath=None):
             pos = positions
     else:
         if positions is not None:
-            print("WARNING: `fixed` overrides `positions`:\nfixed = {fixed}".format(fixed=fixed),
-                  file=sys.stderr)
+            warnings.warn(
+                ("\n" +
+                 "`fixed` overrides `positions`:\n" +
+                 "fixed = {fixed}").format(
+                     fixed=fixed))
         pos = nx.spring_layout(graph, fixed=fixed)
     # Draw graph and save.
     nx.draw(graph, pos=pos)
     if fpath is not None:
-        print("Writing plot to:\n{fpath}".format(fpath=fpath))
         plt.savefig(fpath, bbox_inches='tight')
     plt.show()
     return None
